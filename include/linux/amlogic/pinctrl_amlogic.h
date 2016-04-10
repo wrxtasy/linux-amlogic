@@ -193,4 +193,8 @@ static inline struct meson_domain *to_meson_domain(struct gpio_chip *chip)
 }
 
 extern struct amlogic_pmx *gl_pmx;
+
+int meson_setup_irq(struct gpio_chip *chip, unsigned int gpio,
+			unsigned int irq_flags, int *irq_banks);
+void meson_free_irq(unsigned int gpio, int *irq_banks);
 #endif

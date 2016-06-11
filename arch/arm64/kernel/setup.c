@@ -438,6 +438,7 @@ static const char *hwcap_str[] = {
 static int c_show(struct seq_file *m, void *v)
 {
 	int i;
+	int rev;
 #ifdef CONFIG_AMLOGIC_CPU_INFO
 	unsigned int low0, low1, high0, high1;
 #endif
@@ -487,6 +488,9 @@ static int c_show(struct seq_file *m, void *v)
 	cpuinfo_get_chipid(&low0, &low1, &high0, &high1);
 	seq_printf(m, "Serial\t\t: %08x%08x%08x%08x\n",
 		   high1, high0, low1, low0);
+
+	rev = 0x0200 | get_meson_cpu_version(MESON_CPU_VERSION_LVL_MINOR);
+	seq_printf(m, "Revision\t: %04x\n", rev);
 #endif
 	return 0;
 }

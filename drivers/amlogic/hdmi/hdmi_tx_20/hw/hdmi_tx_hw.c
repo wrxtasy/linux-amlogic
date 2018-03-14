@@ -3021,6 +3021,16 @@ static void hdmitx_debug(struct hdmitx_dev *hdev, const char *buf)
 			hdmi_print(INF, HPD "hdmitx: unlock hpd\n");
 		}
 		return;
+        } else if (strncmp(tmpbuf, "do2020", 6) == 0) {
+                pr_info("hdmitx: BT2020 AVI ON\n");
+                hdmitx_set_reg_bits(HDMITX_DWC_FC_AVICONF1, 3, 6, 2);
+                hdmitx_set_reg_bits(HDMITX_DWC_FC_AVICONF2, 6, 4, 3);
+                return;
+        } else if (strncmp(tmpbuf, "no2020", 6) == 0) {
+                pr_info("hdmitx: BT2020 AVI OFF\n");
+                hdmitx_set_reg_bits(HDMITX_DWC_FC_AVICONF1, 2, 6, 2);
+                hdmitx_set_reg_bits(HDMITX_DWC_FC_AVICONF2, 0, 4, 3);
+                return;
 	} else if (strncmp(tmpbuf, "hpd_stick", 9) == 0) {
 		if (tmpbuf[9] == '1')
 			hdev->hdcp_hpd_stick = 1;

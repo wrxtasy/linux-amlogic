@@ -832,5 +832,10 @@
 		};
 	};
 
+	openvfd {
+		compatible = "open,vfd";
+		dev_name = "openvfd";
+		status = "okay";
+	};
 
 };/* end of / */

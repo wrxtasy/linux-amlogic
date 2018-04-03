@@ -839,4 +839,10 @@
 		 reg = <0x0 0xc883e000 0x0 0x28>;
 	 };
 
+	openvfd {
+		compatible = "open,vfd";
+		dev_name = "openvfd";
+		status = "okay";
+	};
+
 };/* end of / */

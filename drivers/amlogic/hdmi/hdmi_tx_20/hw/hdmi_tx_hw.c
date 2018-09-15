@@ -1967,11 +1967,6 @@ next:
 		hd_set_reg_bits(P_VPU_HDMI_SETTING, 0, 4, 4);
 		hd_set_reg_bits(P_VPU_HDMI_SETTING, 1, 8, 1);
 	}
-	mdelay(1);
-	hd_set_reg_bits(P_VPU_HDMI_FMT_CTRL, 0, 4, 1);
-	mdelay(1);
-        hd_set_reg_bits(P_VPU_HDMI_FMT_CTRL, 1, 10, 1);
-#if 0
 	switch (hdev->cur_video_param->color_depth) {
 	case COLORDEPTH_30B:
 	case COLORDEPTH_36B:
@@ -1991,8 +1986,8 @@ next:
 			hd_set_reg_bits(P_VPU_HDMI_DITH_CNTL, hs_flag, 2, 2);
                 } else {
                         hd_set_reg_bits(P_VPU_HDMI_FMT_CTRL, 0, 4, 1);
-                        hd_set_reg_bits(P_VPU_HDMI_FMT_CTRL, 0, 10, 1);
-		}
+                        hd_set_reg_bits(P_VPU_HDMI_FMT_CTRL, 1, 10, 1);
+		  }
 		break;
 	default:
 		if (get_cpu_type() >= MESON_CPU_MAJOR_ID_GXM) {
@@ -2004,13 +1999,12 @@ next:
 			hd_set_reg_bits(P_VPU_HDMI_DITH_CNTL, 1, 4, 1);
 			/* set hsync/vsync as default 0 */
 			hd_set_reg_bits(P_VPU_HDMI_DITH_CNTL, 0, 2, 2);
-                } else {
-                        hd_set_reg_bits(P_VPU_HDMI_FMT_CTRL, 0, 4, 1);
-                        hd_set_reg_bits(P_VPU_HDMI_FMT_CTRL, 1, 10, 1);
-                }
+		} else {
+                       hd_set_reg_bits(P_VPU_HDMI_FMT_CTRL, 0, 4, 1);
+                       hd_set_reg_bits(P_VPU_HDMI_FMT_CTRL, 1, 10, 1);
+                  }
 		break;
 	}
-#endif
 
 	hdmitx_set_hw(hdev);
 

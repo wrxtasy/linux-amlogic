@@ -3066,16 +3066,30 @@ static void hdmitx_debug(struct hdmitx_dev *hdev, const char *buf)
 			hdmi_print(INF, HPD "hdmitx: unlock hpd\n");
 		}
 		return;
-        } else if (strncmp(tmpbuf, "do2020", 6) == 0) {
-                pr_info("hdmitx: BT2020 AVI ON\n");
-                hdmitx_set_reg_bits(HDMITX_DWC_FC_AVICONF1, 3, 6, 2);
+	} else if (strncmp(tmpbuf, "dither", 6) == 0) {
+		int dither = 0;
+		if (tmpbuf[7] == '1')
+			dither = 1;
+		hd_set_reg_bits(P_VPU_HDMI_FMT_CTRL, dither, 4, 1);
+		pr_info("hdmitx: adjust dither = %d\n", dither);
+		return;
+        } else if (strncmp(tmpbuf, "round", 5) == 0) {
+                int round = 0;
+                if (tmpbuf[6] == '1')
+                        round = 1;
+		hd_set_reg_bits(P_VPU_HDMI_FMT_CTRL, round, 10, 1);
+//                pr_info("hdmitx: adjust round = %d\n", round);
+		return;
+	} else if (strncmp(tmpbuf, "do2020", 6) == 0) {
+		pr_info("hdmitx: BT2020 AVI ON\n");
+		hdmitx_set_reg_bits(HDMITX_DWC_FC_AVICONF1, 3, 6, 2);
                 hdmitx_set_reg_bits(HDMITX_DWC_FC_AVICONF2, 6, 4, 3);
-                return;
+		return;
         } else if (strncmp(tmpbuf, "no2020", 6) == 0) {
-                pr_info("hdmitx: BT2020 AVI OFF\n");
+		pr_info("hdmitx: BT2020 AVI OFF\n");
                 hdmitx_set_reg_bits(HDMITX_DWC_FC_AVICONF1, 2, 6, 2);
                 hdmitx_set_reg_bits(HDMITX_DWC_FC_AVICONF2, 0, 4, 3);
-                return;
+		return;
 	} else if (strncmp(tmpbuf, "hpd_stick", 9) == 0) {
 		if (tmpbuf[9] == '1')
 			hdev->hdcp_hpd_stick = 1;
